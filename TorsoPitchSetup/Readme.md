@@ -1,5 +1,26 @@
-The torsoPitch setup is composed by a torsopitch joint (BOM to be completed) with the addiction of e AMO encoder and a bar where put weights.
+# Torso pitch setup
 
+⚙️ The torsoPitch setup consists of a torso pitch joint (see XXX documentation) equipped with an AMO encoder used to measure the joint position, together with the existing Aksim encoder.
+In addition, a dedicated bar allows the placement of weights to test the static torque of the joint.
+This joint is equipped with the P1000, so it is possible to read the motor temperature by the TDB_DIFF board.
+
+
+## BOM 
+__Main components__
+
+| Component | Rev     | Wingst or cad ref | Note   |
+|-----------|---------|-------------------|--------|
+| EMS       | UNKNOWN | 4546              |        |
+| 2FOC      | UNKNOWN | 3336              |        |
+| I2C_EXT   | B       | 18276             |        |
+| TDB_DIFF  | C       | 18570             | PT1000 |
+|           |         |                   |        |
+
+
+
+
+
+## Configuration files
 
 Configuration files are in: https://github.com/robotology/robots-configuration/blob/devel/experimentalSetups/torso_pitch_mj1_setup. 
 
@@ -45,3 +66,4 @@ i2c_ext -- I2C --- tdb_ext
 
 
 ```
+
