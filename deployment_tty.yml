@@ -1,0 +1,60 @@
+###############################################################################################
+######## HOW TO USE ###########################################################################
+#This deployment runs yarpserver, yarprobotinterface, yarplogger and yarpmotorgui automatically.
+#Command : "docker-compose -f mediumSmallSetup_basic.yml"
+
+####### INFO ON ENVIRONMENT VARIABLES #################################################################
+# the directory defined as ${ROOT_DIR}=/home/icub is basically the home directory of the default icub user
+# which is the default user created with the user-based image.
+# ROOT_DIR is an environmental variable defined in the .bashrc file of the user home directory
+# if you are using this deployment files in your machine remember to choose one of the following options 
+# to run the containers correctly:
+# - declare that env varibale when running the docker compose command and so then export the variable per each terminal opened
+# - add the variable exporting in your .bashrc file so each time you open a terminal you have it declared
+# - add it to the .bash_aliases file considering that that special file is looked for by the .bashrc
+
+x-yarp_tty: &yarp_tty
+  image: ghcr.io/icub-tech-iit/docker-deployment-images/cd_superbuild-icubhead-robometry:master-unstable_sources
+  environment:
+    - YARP_FORWARD_LOG_ENABLE=1
+    - DISPLAY=${DISPLAY}
+    - QT_X11_NO_MITSHM=1
+    - XAUTHORITY=${ROOT_DIR}/.Xauthority
+  volumes:
+    - "${HOME}/.config/yarp:${ROOT_DIR}/.config/yarp"
+    - "${HOME}/workspace:${ROOT_DIR}/workspace"
+    - "/tmp/.X11-unix:/tmp/.X11-unix"
+    - "${XAUTHORITY}:${ROOT_DIR}/.Xauthority"
+  network_mode: "host"
+  privileged: true
+  tty: true
+  stdin_open: true
+  working_dir: ${ROOT_DIR}/workspace/robots-configuration/experimentalSetups/torso_pitch_mj1_setup
+
+services:
+  ysetupserver:
+    <<: *yarp_tty
+    command: sh -c "yarp where | grep 'is available at ip' > /dev/null ; if [ ! $$? -eq 0 ]; then yarpserver --read; fi"
+    #command: sh -c "yarp where | grep 'is available at ip' > /dev/null ; if [ ! $$? -eq 0 ]; then sleep infinity; fi"
+
+  
+  ysetuprobotinterface:
+    <<: *yarp_tty
+          # <<: *improvedJointsetup
+          # restart: on-failure
+          # command: yarprobotinterface
+
+  ysetuplogger:
+    <<: *yarp_tty
+    restart: on-failure
+    command: yarplogger --start
+  
+  ysetupmotorgui:
+    <<: *yarp_tty
+          # <<: *improvedJointsetup
+          # restart: on-failure
+          # command: yarpmotorgui --calib
+
+
+
+    #command: sh -c "if [ -f "/root/.config/yarp/yarp_namespace.conf" ]; then yarp wait $$(echo $$(cat /root/.config/yarp/yarp_namespace.conf)); else yarp wait /root; fi; cd /root/FIVE_WORKSPACE/setupApps/motor-brake/; python3 motorBrakeManager.py"
