@@ -1,0 +1,26 @@
+x-improvedJointsetup: &improvedJointsetup
+  image: ghcr.io/icub-tech-iit/docker-deployment-images/cd_superbuild-icubhead-withuser:master-unstable_sources
+  environment:
+    - YARP_FORWARD_LOG_ENABLE=1
+    - DISPLAY=${DISPLAY}
+    - QT_X11_NO_MITSHM=1
+    - XAUTHORITY=${ROOT_DIR}/.Xauthority
+  volumes:
+    - "${HOME}/.config/yarp:${ROOT_DIR}/.config/yarp"
+    - "${HOME}/firmware:${ROOT_DIR}/firmware"
+    - "/tmp/.X11-unix:/tmp/.X11-unix"
+    - "${XAUTHORITY}:${ROOT_DIR}/.Xauthority"
+  #in ${ROOT_DIR}/firmware folder we have the firmwareupdater.ini
+  working_dir: ${ROOT_DIR}/firmware/
+  network_mode: "host"
+
+
+
+
+services:
+  
+  yappfwupdater:
+    <<: *improvedJointsetup
+    restart: on-failure
+    command: FirmwareUpdater -a
+
