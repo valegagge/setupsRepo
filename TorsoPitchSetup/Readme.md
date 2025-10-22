@@ -1,5 +1,12 @@
 # Torso pitch setup
 
+## Index
+- [Description](#description)
+- [BOM](#bom)
+- [Configuration files](#configuration-files)
+- [Connections](#connections)
+
+## Description
 ⚙️ The torsoPitch setup includes a torso-pitch joint (see XXX documentation) fitted with both an AMO encoder and the existing Aksim encoder to measure joint position. One encoder is used for closed‑loop control and is calibrated; the other serves as an uncalibrated reference for verification. Which encoder the controller uses is defined in the configuration file: the controller encoder is labeled `real` and the secondary encoder `fake` (note that the `fake` encoder is not calibrated). See the configuration section for details on assigning `real` and `fake` encoders.
 
 A dedicated bar allows attaching weights to test the joint's static torque. Because this joint uses the `P1000`, motor temperature can be read via the `TDB_DIFF` board.
@@ -87,6 +94,7 @@ i2c_ext -- I2C --- tdb_ext
 
 
 ```
+
 
 
 
