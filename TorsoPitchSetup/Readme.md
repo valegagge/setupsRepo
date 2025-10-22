@@ -26,11 +26,25 @@ __Main components__
 
 ## Configuration files
 
-Configuration files are in: https://github.com/robotology/robots-configuration/blob/devel/experimentalSetups/torso_pitch_mj1_setup. 
-For changing the `real`and `fake` encoder, you need to change the `mc_service`. Then you need to arrange the `mec`file for arrange the `gearboxE2J` parameter end the calibration file accordingly.
+The configuration files are available at:  
+🔗 [robots-configuration/experimentalSetups/torso_pitch_mj1_setup](https://github.com/robotology/robots-configuration/blob/devel/experimentalSetups/torso_pitch_mj1_setup)
 
-On the above-mentioned files you can find the instructions on how to make the change.
+To switch between the `real` and `fake` encoder, you need to modify the `mc_service` configuration.  
+You should also update the `.mec` file accordingly to adjust the `gearboxE2J` parameter.
 
+In addition, the calibration file must be updated by setting the correct values for the `calibrationType`, `calibration1`, and `calibrationZero` parameters.
+
+Detailed instructions on how to perform these changes can be found within the configuration files mentioned above.
+
+---
+
+> ⚠️ **Important Note:**  
+> When using the **AMO encoder with incremental calibration**, you must mount the mechanical **block shown in the image below**.  
+> This block allows the joint to move until it reaches the **hard stop**, which corresponds to the table on which the joint is mounted.
+
+
+
+![shared image](https://github.com/user-attachments/assets/53d1b880-2b41-44dc-b5e1-704bf3c88359)
 
 
 ## Connections
@@ -73,5 +87,6 @@ i2c_ext -- I2C --- tdb_ext
 
 
 ```
+
 
 
