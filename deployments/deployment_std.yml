@@ -27,7 +27,7 @@ x-improvedJointsetup: &improvedJointsetup
     - "${HOME}/workspace:${ROOT_DIR}/workspace"
     - "/tmp/.X11-unix:/tmp/.X11-unix"
     - "${XAUTHORITY}:${ROOT_DIR}/.Xauthority"
-  working_dir: ${ROOT_DIR}/workspace/robots-configuration/experimentalSetups/upperArmSetup
+  working_dir: ${ROOT_DIR}/workspace/robots-configuration/experimentalSetups/torso_pitch_mj1_setup
   #ports:
   #  - "10000:10000"
   network_mode: "host"
